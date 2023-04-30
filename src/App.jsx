@@ -2,13 +2,25 @@ import React, { useState } from "react";
 import "./style.css";
 
 export default function App() {
-  useState("");
+  const [newItem, setNewItem] = useState("");
+
+  //Create a brand new todo and add to the list
+  const [todos, setToDos] = useState([]);
+
+  function handleSubmit(e) {
+    e.preventDefault(); //stop page from refreshing
+  }
   return (
     <>
-      <form className="new-item-form">
+      <form on Submit={handleSubmit} className="new-item-form">
         <div className="form-row">
           <label htmlFor="item">New Item</label>
-          <input type="text" id="item" />
+          <input
+            value={newItem}
+            onChange={(e) => setNewItem(e.value.target)}
+            type="text"
+            id="item"
+          />
         </div>
         <button className="btn">Add</button>
       </form>
