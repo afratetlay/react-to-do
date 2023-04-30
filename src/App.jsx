@@ -9,6 +9,13 @@ export default function App() {
 
   function handleSubmit(e) {
     e.preventDefault(); //stop page from refreshing
+
+    setToDos((currentTodos) => {
+      return [
+        ...currentTodos,
+        { id: crypto.randomUUID(), title: newItem, completed: false },
+      ];
+    });
   }
   return (
     <>
@@ -17,7 +24,7 @@ export default function App() {
           <label htmlFor="item">New Item</label>
           <input
             value={newItem}
-            onChange={(e) => setNewItem(e.value.target)}
+            onChange={(e) => setNewItem(e.target.value)}
             type="text"
             id="item"
           />
