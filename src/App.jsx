@@ -5,12 +5,12 @@ export default function App() {
   const [newItem, setNewItem] = useState("");
 
   //Create a brand new todo and add to the list
-  const [todos, setToDos] = useState([]);
+  const [todos, setTodos] = useState([]);
 
   function handleSubmit(e) {
     e.preventDefault(); //stop page from refreshing
 
-    setToDos((currentTodos) => {
+    setTodos((currentTodos) => {
       return [
         ...currentTodos,
         { id: crypto.randomUUID(), title: newItem, completed: false },
@@ -21,7 +21,7 @@ export default function App() {
   }
 
   function toggleTodo(id, completed) {
-    setToDos((currentTodos) => {
+    setTodos((currentTodos) => {
       return currentTodos.map((todo) => {
         if (todo.id === id) {
           return { ...todo, completed };
@@ -30,6 +30,13 @@ export default function App() {
       });
     });
   }
+
+  function deleteTodo(id) {
+    setTodos((currentTodos) => {
+      return currentTodos.filter((todo) => todo.id !== id);
+    });
+  }
+
   return (
     <>
       <form onSubmit={handleSubmit} className="new-item-form">
@@ -46,6 +53,7 @@ export default function App() {
       </form>
       <h1 className="header">Todo List</h1>
       <ul className="list">
+        {todos.length === 0 && "No Todos"}
         {todos.map((todo) => {
           return (
             <li key={todo.id}>
@@ -57,7 +65,12 @@ export default function App() {
                 />
                 {todo.title}
               </label>
-              <button className="btn btn-danger">Delete</button>
+              <button
+                onClick={() => deleteTodo(todo.id)}
+                className="btn btn-danger"
+              >
+                Delete
+              </button>
             </li>
           );
         })}
